@@ -43,7 +43,7 @@ func main() {
 	}
 
 	// Copy the file to the clipboard using Finder as context
-	if err := copyToClipboardUsingFinder(absPath); err != nil {
+	if err := copyToClipboardInObjC(absPath); err != nil {
 		log.Fatalf("Failed to copy file to clipboard: %v", err)
 	}
 
