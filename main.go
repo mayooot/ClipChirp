@@ -5,6 +5,7 @@ import (
 	"log"
 	"os"
 	"os/exec"
+	"path/filepath"
 	"strings"
 )
 
@@ -18,7 +19,7 @@ func main() {
 	inputPath := os.Args[1]
 
 	// Resolve the absolute path using realpath
-	absPath, err := resolveAbsolutePathUsingRealpath(inputPath)
+	absPath, err := resolveAbsolutePathInGo(inputPath)
 	if err != nil {
 		log.Fatalf("Failed to resolve absolute path: %v", err)
 	}
@@ -39,6 +40,10 @@ func resolveAbsolutePathUsingRealpath(path string) (string, error) {
 		return "", fmt.Errorf("error executing realpath: %w", err)
 	}
 	return strings.TrimSpace(string(output)), nil
+}
+
+func resolveAbsolutePathInGo(path string) (string, error) {
+	return filepath.Abs(path)
 }
 
 // copyToClipboardUsingFinder copies the given file to the clipboard using Finder as context
