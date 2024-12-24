@@ -1,4 +1,5 @@
 # ClipChirp
+
 Copy file to your clipboard in macOS
 
 # Usage
@@ -10,3 +11,10 @@ $ clipchirp bird.png
 
 🦤 Successfully copied /Users/ming/ClipChirp/bird.png to clipboard
 ~~~
+
+# Build and Install
+
+~~~bash
+$ chmod +x setup.sh
+$ ./setup.sh
+ClipChirp setup complete!
