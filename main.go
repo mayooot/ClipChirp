@@ -10,6 +10,15 @@ import (
 )
 
 func main() {
+	// Print help message if the user specifies the -h or --help flag
+	if len(os.Args) > 1 {
+		switch os.Args[1] {
+		case "-h", "--help":
+			printHelp()
+			os.Exit(0)
+		}
+	}
+
 	// Validate command-line arguments
 	if len(os.Args) < 2 {
 		log.Fatal("File path argument is required")
@@ -17,6 +26,15 @@ func main() {
 
 	// Get the input file path
 	inputPath := os.Args[1]
+
+	fileInfo, err := os.Stat(inputPath)
+	if err != nil {
+		log.Fatalf("Failed to get file info: %v", err)
+	}
+
+	if fileInfo.IsDir() {
+		log.Fatalf("Not support directory")
+	}
 
 	// Resolve the absolute path using realpath
 	absPath, err := resolveAbsolutePathInGo(inputPath)
@@ -54,4 +72,19 @@ func copyToClipboardUsingFinder(path string) error {
 		return fmt.Errorf("error executing osascript: %w", err)
 	}
 	return nil
+}
+
+const usage = `Usage: ClipChirp [options] <file_path>
+    
+Copies the specified file to the clipboard (as a file reference).
+
+Options:
+  -h, --help    Show this help message
+  
+Example:
+  ClipChirp ./bird.png
+`
+
+func printHelp() {
+	fmt.Printf(usage)
 }
